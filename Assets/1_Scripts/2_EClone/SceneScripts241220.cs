@@ -11,17 +11,27 @@ public class SceneScripts241220 : MonoBehaviour
     public void OnPlusClick()
     {
         GameObject newGo = StaticData241220.pool.Get(inputField.text);
+        newGo.transform.position = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), Random.Range(-5, 5));
+
+        if (!activeGoDict.ContainsKey(inputField.text))
+        {
+            activeGoDict[inputField.text] = new Stack<GameObject>();
+        }
 
         activeGoDict[inputField.text].Push(newGo);
+        Debug.Log (activeGoDict[inputField.text].Count);
     }
+
     public void OnMinusClick()
     {
         GameObject go = activeGoDict[inputField.text].Pop();
-        if(go != null)
+
+        if(go == null)
         {
             Debug.Log("반환할 GameObject 없음");
             return;
         }
+
         StaticData241220.pool.Release(go, inputField.text);
     }
 }

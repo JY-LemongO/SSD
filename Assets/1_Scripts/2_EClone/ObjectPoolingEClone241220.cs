@@ -100,7 +100,7 @@ public class ObjectPoolingEClone241220 : MonoBehaviour
             return null;
         }
 
-        // Capacity 초과인지 확인
+        // Stack 비어있는지
         if (!item.CheckStackRemain())
         {
             CreateGameObject(item);
