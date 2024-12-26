@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -9,6 +8,8 @@ public class UIManager : MonoBehaviour
 
     [field: SerializeField] public Transform OpenedUITrs { get; private set; }
     [field: SerializeField] public Transform ClosedUITrs { get; private set; }
+
+    public int CurrentChildCount => transform.childCount;
 
     [SerializeField] private List<UIBase> _openedUIList = new();
     [SerializeField] private List<UIBase> _closedUIList = new();
@@ -49,7 +50,7 @@ public class UIManager : MonoBehaviour
                 Debug.Log($"{typeof(T).Name} UI가 이미 Close되어있습니다.");
                 ui = closedUI as T;
 
-                _closedUIList.Remove(closedUI);                
+                _closedUIList.Remove(closedUI);
                 closedUI.transform.SetParent(OpenedUITrs);
                 closedUI.gameObject.SetActive(true);
                 return true;
@@ -68,13 +69,13 @@ public class UIManager : MonoBehaviour
 
         T popup = null;
 
-        if (!IsAlreadyOpened(out popup))        
+        if (!IsAlreadyOpened(out popup))
         {
             T uiRef = Resources.Load<T>($"1_JY/Prefabs/{path}");
 
             popup = Instantiate(uiRef, OpenedUITrs);
             popup.gameObject.SetActive(true);
-            popup.name = path;            
+            popup.name = path;
         }
 
         if (popup == null)
@@ -97,9 +98,19 @@ public class UIManager : MonoBehaviour
         return item;
     }
 
+    public void SetFrontUI(UIBase ui)
+    {
+        _openedUIList.Remove(ui);
+        _openedUIList.Add(ui);
+        _frontUI = ui;
+
+        Debug.Log(CurrentChildCount);
+        ui.transform.SetSiblingIndex(CurrentChildCount);
+    }
+
     public void CloseFrontUI()
     {
-        if(_frontUI == null)
+        if (_frontUI == null)
         {
             Debug.Log("Front UI가 없습니다.");
             return;
@@ -130,7 +141,7 @@ public class UIManager : MonoBehaviour
             ui.gameObject.SetActive(false);
 
             _closedUIList.Add(ui);
-        }            
+        }
         _openedUIList.Clear();
     }
 
