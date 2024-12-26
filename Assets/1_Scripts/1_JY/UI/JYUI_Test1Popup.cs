@@ -9,7 +9,8 @@ public class UI_Test1Popup : UI_Popup
 
     public override void Setup()
     {
-        Debug.Log("셋업 됐지?");
+        base.Setup();
+
         _myNameText.text = $"{GetType().Name}";
         _closeUIBtn.onClick.AddListener(() => CloseUI());
     }

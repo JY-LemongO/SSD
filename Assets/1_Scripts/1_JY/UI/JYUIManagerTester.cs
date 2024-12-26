@@ -15,12 +15,12 @@ public class UIManagerTester : MonoBehaviour
 
     private void Start()
     {
-        test1Popup.onClick.AddListener(() => UIManager.Instance.OpenPopupUI<UI_Test1Popup>());
-        test2Popup.onClick.AddListener(() => UIManager.Instance.OpenPopupUI<UI_Test2Popup>());
-        test3Popup.onClick.AddListener(() => UIManager.Instance.OpenPopupUI<UI_Test3Popup>());
+        test1Popup.onClick.AddListener(() => UIManager.Instance.OpenPopupUI<UI_Test1Popup>().Setup());
+        test2Popup.onClick.AddListener(() => UIManager.Instance.OpenPopupUI<UI_Test2Popup>().Setup());
+        test3Popup.onClick.AddListener(() => UIManager.Instance.OpenPopupUI<UI_Test3Popup>().Setup());
 
-        test1Item.onClick.AddListener(() => UIManager.Instance.CreateItemUI<UI_Test1Item>(test3Popup.transform));
-        test2Item.onClick.AddListener(() => UIManager.Instance.CreateItemUI<UI_Test2Item>(test3Popup.transform));
+        test1Item.onClick.AddListener(() => UIManager.Instance.CreateItemUI<UI_Test1Item>(test3Popup.transform).Setup());
+        test2Item.onClick.AddListener(() => UIManager.Instance.CreateItemUI<UI_Test2Item>(test3Popup.transform).Setup());
 
         closeFrontUI.onClick.AddListener(() => UIManager.Instance.CloseFrontUI());
         closeAllUI.onClick.AddListener(() => UIManager.Instance.CloseAllUI());

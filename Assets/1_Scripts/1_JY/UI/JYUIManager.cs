@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     }
 
     // 이미 최초 1회 이상 Open된 경우, openedUIList나 closedUIList 에서 찾아서 보내준다.
-    public bool IsAlreadyOpened<T>(out T ui) where T : UIBase
+    public bool IsAlreadySpawned<T>(out T ui) where T : UIBase
     {
         ui = null;
 
@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
                 Debug.Log($"{typeof(T).Name} UI가 이미 Open되어있습니다.");
 
                 ui = openedUI as T;
+                SetFrontUI(ui);
                 return true;
             }
         }
@@ -51,6 +52,8 @@ public class UIManager : MonoBehaviour
                 ui = closedUI as T;
 
                 _closedUIList.Remove(closedUI);
+                _openedUIList.Add(closedUI);
+
                 closedUI.transform.SetParent(OpenedUITrs);
                 closedUI.gameObject.SetActive(true);
                 return true;
@@ -69,13 +72,16 @@ public class UIManager : MonoBehaviour
 
         T popup = null;
 
-        if (!IsAlreadyOpened(out popup))
+        if (!IsAlreadySpawned(out popup))
         {
             T uiRef = Resources.Load<T>($"1_JY/Prefabs/{path}");
 
             popup = Instantiate(uiRef, OpenedUITrs);
             popup.gameObject.SetActive(true);
             popup.name = path;
+
+            _openedUIList.Add(popup);
+            _frontUI = popup;
         }
 
         if (popup == null)
@@ -83,10 +89,6 @@ public class UIManager : MonoBehaviour
             Debug.LogError($"{path}이름을 가진 UI가 없습니다.");
             return null;
         }
-
-        popup.Setup();
-        _openedUIList.Add(popup);
-        _frontUI = popup;
 
         return popup;
     }
@@ -117,11 +119,6 @@ public class UIManager : MonoBehaviour
         }
 
         CloseUI(_frontUI);
-
-        if (_openedUIList.Count > 0)
-            _frontUI = _openedUIList[_openedUIList.Count - 1];
-        else
-            _frontUI = null;
     }
 
     public void CloseUI(UIBase ui, bool isItem = false)
@@ -131,6 +128,14 @@ public class UIManager : MonoBehaviour
 
         _openedUIList.Remove(ui);
         _closedUIList.Add(ui);
+
+        if (_frontUI == ui)
+        {
+            if (_openedUIList.Count > 0)
+                _frontUI = _openedUIList[_openedUIList.Count - 1];
+            else
+                _frontUI = null;
+        }
     }
 
     public void CloseAllUI()
@@ -143,6 +148,8 @@ public class UIManager : MonoBehaviour
             _closedUIList.Add(ui);
         }
         _openedUIList.Clear();
+
+        _frontUI = null;
     }
 
     public void Dispose()

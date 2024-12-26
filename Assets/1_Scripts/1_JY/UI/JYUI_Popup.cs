@@ -5,6 +5,11 @@ public class UI_Popup : UIBase, IDragableUI_JY
 {
     private Vector2 _pointerDownOffset;
 
+    public override void Setup()
+    {
+        Debug.Log($"{GetType().Name}:: Setup");
+    }
+
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         // Drag 시 포인터 위치 정중앙이 아닌 찍은 그 지점부터 움직이도록 Offset 설정.
