@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SAM_UI_Button3 : MonoBehaviour
+public class SAM_UI_Button3 : SAM_UIBase
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
