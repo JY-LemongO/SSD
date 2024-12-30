@@ -6,6 +6,8 @@ public class SAM_UIScene : MonoBehaviour
     void Start()
     {
         SAM_UIManager.Instance.RegisterUI("SAM_UI_Button1");
+        SAM_UIManager.Instance.RegisterUI("SAM_UI_Button2");
+        SAM_UIManager.Instance.RegisterUI("SAM_UI_Button3");
         SAM_UIManager.Instance.ShowAllUI();
     }
 

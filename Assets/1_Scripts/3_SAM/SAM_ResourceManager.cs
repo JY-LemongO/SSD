@@ -16,7 +16,7 @@ public class SAM_ResourceManager : SAM_Singleton<SAM_ResourceManager>
 
     public GameObject Instantiate(string path, Transform parent = null)
     {
-        GameObject prefab = Load<GameObject>($"Prefabs/{path}");
+        GameObject prefab = Load<GameObject>($"3_SAM/Prefabs/{path}");
         if (prefab == null)
         {
             Debug.Log($"Path can't be null !!");

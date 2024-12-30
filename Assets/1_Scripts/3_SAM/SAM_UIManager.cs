@@ -20,7 +20,7 @@ public class SAM_UIManager : SAM_Singleton<SAM_UIManager> // UI매니저는 마�
     {
         if (!_UIStorage.ContainsKey(UIName))
         {
-            GameObject UIObject = SAM_ResourceManager.Instance.Instantiate($"3_SAM/{UIName}");
+            GameObject UIObject = SAM_ResourceManager.Instance.Instantiate($"{UIName}");
 
             UIObject.name = UIName;
 
