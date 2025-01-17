@@ -7,7 +7,7 @@ public class SAM_UIManager : SAM_Singleton<SAM_UIManager> // UI매니저는 마�
 {
     // 딕셔너리가 나으려나
     private Dictionary<string, SAM_UIBase> _UIStorage = new Dictionary<string, SAM_UIBase>();
-
+            
     protected override void Init()
     {
         _dontDestroyOnLoad = true;
